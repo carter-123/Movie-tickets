@@ -1,5 +1,5 @@
 """ Movie theatre ticketing system - v1
-Confirm order
+Update totals
 Created by Carter Wilson
 """
 
@@ -10,7 +10,7 @@ def confirm_order(ticket, number, cost):
     while confirm != "Y" and confirm != "N":
         confirm = input(f"\nYou have ordered {number} {ticket} ticket(s)"
                         f"at a cost of ${cost * number:.2f}!\n"
-                        f"Confirm order: ('Y' or 'N') ")
+                        f"Confirm order: ('Y' or 'N') ").upper()
         if confirm == "Y":
             return True
 
@@ -53,6 +53,18 @@ def sell_ticket():
 
         if confirm_order(ticket_type, num_tickets, cost):
             print("Order confirmed.")
+
+            # Component 5 - Update totals
+            total_sales += cost
+            tickets_sold += num_tickets
+            if ticket_type == "A":
+                adult_tickets += num_tickets
+            elif ticket_type == "S":
+                student_tickets += num_tickets
+            elif ticket_type == "C":
+                child_tickets += num_tickets
+            else:
+                gift_vouchers += num_tickets
         else:
             print("Order cancelled.")
 

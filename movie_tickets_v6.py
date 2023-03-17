@@ -1,7 +1,21 @@
 """ Movie theatre ticketing system - v1
-Confirm order
+Print end summary
 Created by Carter Wilson
 """
+
+
+# Component 6 - Print end summary
+def print_summary(tickets_sold, adult_tickets, student_tickets, child_tickets, gift_vouchers
+                  , total_sales):
+    print("="*50)
+    print(f"The total tickets sold today was {tickets_sold}\n"
+          f"This was made up of: \n"
+          f"\t{adult_tickets} for adults and\n"
+          f"\t{student_tickets} for students and\n"
+          f"\t{child_tickets} for children and\n"
+          f"\t{gift_vouchers} for gift vouchers \n"
+          f"Sales for the day came to ${total_sales:.2f}")
+    print("="*50)
 
 
 # Component 4 - Confirm order
@@ -10,7 +24,7 @@ def confirm_order(ticket, number, cost):
     while confirm != "Y" and confirm != "N":
         confirm = input(f"\nYou have ordered {number} {ticket} ticket(s)"
                         f"at a cost of ${cost * number:.2f}!\n"
-                        f"Confirm order: ('Y' or 'N') ")
+                        f"Confirm order: ('Y' or 'N') ").upper()
         if confirm == "Y":
             return True
 
@@ -53,12 +67,28 @@ def sell_ticket():
 
         if confirm_order(ticket_type, num_tickets, cost):
             print("Order confirmed.")
+            
+            # Component 5 - Update totals
+            total_sales += cost * num_tickets
+            tickets_sold += num_tickets
+            if ticket_type == "A":
+                adult_tickets += num_tickets
+            elif ticket_type == "S":
+                student_tickets += num_tickets
+            elif ticket_type == "C":
+                child_tickets += num_tickets
+            else:
+                gift_vouchers += num_tickets
         else:
             print("Order cancelled.")
 
         ticket_wanted = input("Do you want to sell another ticket? (Y/N): "
                               "").upper()
+    # Component 6 - Print end summary
+    print_summary(tickets_sold, adult_tickets, student_tickets, child_tickets, gift_vouchers
+                  , total_sales)
 
 
 # Main routine
 sell_ticket()
+print("Goodbye\nThanks for using Fanfare Movies")
