@@ -1,7 +1,19 @@
 """ Movie theatre ticketing system - v1
-Print end summary
+Integer checker
 Created by Carter Wilson
 """
+
+
+# Component 7 - integer checker
+def integer_checker(question):
+    error = "\nSorry, you must enter an integer\n"
+    number = ""
+    while not number:
+        try:
+            number = int(input(question))
+            return number
+        except ValueError:
+            print(error)
 
 
 # Component 6 - Print end summary
@@ -61,8 +73,8 @@ def sell_ticket():
                             "\t'C' for Child, or\n"
                             "\t'G' for Gift Voucher\n"
                             ">> ").upper()
-        num_tickets = int(input(f"How many {ticket_type} tickets do you want? "
-                                f""))
+        num_tickets = integer_checker(f"How many {ticket_type} tickets do you want? "
+                                      f"")
         cost = get_price(ticket_type)
 
         if confirm_order(ticket_type, num_tickets, cost):

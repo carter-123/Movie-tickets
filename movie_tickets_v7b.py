@@ -1,7 +1,19 @@
 """ Movie theatre ticketing system - v1
-Print end summary
+Ensure valid ticket type
 Created by Carter Wilson
 """
+
+
+# Component 7 - integer checker
+def integer_checker(question):
+    error = "\nSorry, you must enter an integer\n"
+    number = ""
+    while not number:
+        try:
+            number = int(input(question))
+            return number
+        except ValueError:
+            print(error)
 
 
 # Component 6 - Print end summary
@@ -61,29 +73,34 @@ def sell_ticket():
                             "\t'C' for Child, or\n"
                             "\t'G' for Gift Voucher\n"
                             ">> ").upper()
-        num_tickets = int(input(f"How many {ticket_type} tickets do you want? "
-                                f""))
-        cost = get_price(ticket_type)
-
-        if confirm_order(ticket_type, num_tickets, cost):
-            print("Order confirmed.")
-            
-            # Component 5 - Update totals
-            total_sales += cost * num_tickets
-            tickets_sold += num_tickets
-            if ticket_type == "A":
-                adult_tickets += num_tickets
-            elif ticket_type == "S":
-                student_tickets += num_tickets
-            elif ticket_type == "C":
-                child_tickets += num_tickets
-            else:
-                gift_vouchers += num_tickets
+        # Ensuring valid ticket type chosen
+        valid_types = ["A", "S", "C", "G"]
+        if ticket_type not in valid_types:
+            print("Not a valid ticket type\n")
         else:
-            print("Order cancelled.")
+            num_tickets = integer_checker(f"How many {ticket_type} tickets do you want? "
+                                          f"")
+            cost = get_price(ticket_type)
 
-        ticket_wanted = input("Do you want to sell another ticket? (Y/N): "
-                              "").upper()
+            if confirm_order(ticket_type, num_tickets, cost):
+                print("Order confirmed.")
+
+                # Component 5 - Update totals
+                total_sales += cost * num_tickets
+                tickets_sold += num_tickets
+                if ticket_type == "A":
+                    adult_tickets += num_tickets
+                elif ticket_type == "S":
+                    student_tickets += num_tickets
+                elif ticket_type == "C":
+                    child_tickets += num_tickets
+                else:
+                    gift_vouchers += num_tickets
+            else:
+                print("Order cancelled.")
+
+            ticket_wanted = input("Do you want to sell another ticket? (Y/N): "
+                                  "").upper()
     # Component 6 - Print end summary
     print_summary(tickets_sold, adult_tickets, student_tickets, child_tickets, gift_vouchers
                   , total_sales)
